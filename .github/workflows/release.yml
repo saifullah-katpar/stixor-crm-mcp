@@ -28,8 +28,15 @@ jobs:
       - name: Package standalone binaries
         run: npx pkg dist/index.cjs --targets node20-win-x64,node20-macos-x64,node20-macos-arm64 --output dist/stixor-crm
 
-      - name: List outputs
-        run: ls -la dist/
+      - name: List and rename outputs
+        run: |
+          ls -la dist/
+          # pkg names files like stixor-crm-win-x64.exe, stixor-crm-macos-x64, etc.
+          # Rename to simpler names
+          mv dist/stixor-crm-win-x64.exe dist/stixor-crm-win.exe || true
+          mv dist/stixor-crm-macos-x64 dist/stixor-crm-macos || true
+          mv dist/stixor-crm-macos-arm64 dist/stixor-crm-macos-arm64 || true
+          ls -la dist/
 
       - uses: actions/upload-artifact@v4
         with:
@@ -49,6 +56,10 @@ jobs:
         with:
           name: binaries
           path: dist/
+
+      - name: Verify binary exists
+        run: dir dist\
+        shell: cmd
 
       - name: Build Inno Setup installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.4
