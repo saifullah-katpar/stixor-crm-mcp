@@ -17,9 +17,6 @@ OutputDir=..\dist\installer
 [Files]
 Source: "..\dist\stixor-crm-win.exe"; DestDir: "{app}"; Flags: ignoreversion
 
-[Run]
-Filename: "{app}\configure.bat"; Parameters: """{app}\stixor-crm-win.exe"""; Flags: runhidden shellexec waituntilterminated; StatusMsg: "Configuring Claude Desktop..."
-
 [Code]
 var ApiKeyPage: TInputQueryWizardPage;
 var ApiUrlPage: TInputQueryWizardPage;
