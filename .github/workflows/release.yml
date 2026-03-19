@@ -1,0 +1,99 @@
+name: Build & Release Installers
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build-binaries:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Bundle with esbuild
+        run: npm run bundle
+
+      - name: Package standalone binaries
+        run: npx pkg dist/index.cjs --targets node18-win-x64,node18-macos-x64,node18-macos-arm64 --output dist/stixor-crm
+
+      - name: List outputs
+        run: ls -la dist/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: binaries
+          path: |
+            dist/stixor-crm-win.exe
+            dist/stixor-crm-macos
+            dist/stixor-crm-macos-arm64
+
+  build-windows-installer:
+    needs: build-binaries
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: binaries
+          path: dist/
+
+      - name: Build Inno Setup installer
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.4
+        with:
+          path: installer/windows-setup.iss
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: dist/installer/StixorCRM-MCP-Setup.exe
+
+  create-release:
+    needs: [build-binaries, build-windows-installer]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: binaries
+          path: dist/
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: windows-installer
+          path: dist/installer/
+
+      - name: Prepare macOS installer package
+        run: |
+          mkdir -p release
+          # Windows installer
+          cp dist/installer/StixorCRM-MCP-Setup.exe release/
+          # macOS: zip binary + installer script together
+          cp installer/mac-installer.sh dist/
+          chmod +x dist/mac-installer.sh dist/stixor-crm-macos dist/stixor-crm-macos-arm64
+          cd dist && zip ../release/StixorCRM-MCP-Mac-Intel.zip stixor-crm-macos mac-installer.sh
+          cd dist && zip ../release/StixorCRM-MCP-Mac-AppleSilicon.zip stixor-crm-macos-arm64 mac-installer.sh
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            release/StixorCRM-MCP-Setup.exe
+            release/StixorCRM-MCP-Mac-Intel.zip
+            release/StixorCRM-MCP-Mac-AppleSilicon.zip

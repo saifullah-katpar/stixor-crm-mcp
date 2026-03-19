@@ -15,31 +15,35 @@ An MCP (Model Context Protocol) server that connects Claude Desktop to your [Out
 | `list_documents` | List documents in a collection |
 | `archive_document` | Soft-delete a document |
 
-## Quick Setup (Non-Technical)
+## Install (No Technical Knowledge Needed)
 
 ### Prerequisites
 
-1. **Node.js v18+** — [Download here](https://nodejs.org) (pick the LTS version, run the installer)
-2. **Claude Desktop** — [Download here](https://claude.ai/download)
-3. **Outline API Key** — Ask your admin or generate one from Outline wiki settings
+- **Claude Desktop** — [Download here](https://claude.ai/download)
+- **Outline API Key** — Ask your admin or generate one from Outline wiki settings
 
-### macOS
+### Windows — One-Click Installer
 
-1. Download or clone this repo
-2. Double-click **`install-mac.command`**
-3. Enter your API key when prompted
+1. Go to the [Releases page](../../releases/latest)
+2. Download **`StixorCRM-MCP-Setup.exe`**
+3. Run the installer — it will ask for your API key
 4. Restart Claude Desktop
 
-### Windows
+No Node.js or coding knowledge required. Standard Windows setup wizard.
 
-1. Download or clone this repo
-2. Double-click **`install-windows.bat`**
-3. Enter your API key when prompted
-4. Restart Claude Desktop
+### macOS — One-Click Installer
 
-That's it — no terminal knowledge needed.
+1. Go to the [Releases page](../../releases/latest)
+2. Download **`StixorCRM-MCP-Mac-AppleSilicon.zip`** (M1/M2/M3) or **`StixorCRM-MCP-Mac-Intel.zip`**
+3. Unzip, then double-click **`mac-installer.sh`**
+4. Enter your API key when prompted
+5. Restart Claude Desktop
 
-## Setup (Technical)
+No Node.js or coding knowledge required.
+
+## Install (Developer Setup)
+
+If you prefer to build from source:
 
 ```bash
 git clone https://github.com/saifullah-katpar/stixor-crm-mcp.git
@@ -88,3 +92,14 @@ After setup, try these in Claude Desktop:
 |----------|----------|---------|-------------|
 | `OUTLINE_API_KEY` | Yes | — | Your Outline API key |
 | `OUTLINE_API_URL` | No | `https://wiki.stixor.com/api` | Outline API base URL |
+
+## Releasing New Versions
+
+To create a new release with installers:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+GitHub Actions will automatically build and publish installers for Windows and macOS.
