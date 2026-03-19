@@ -54,11 +54,17 @@ if "%API_URL%"=="" set "API_URL=https://wiki.stixor.com/api"
 
 echo.
 
+:: Add common Node.js install paths in case PATH is incomplete
+set "PATH=%PATH%;%ProgramFiles%\nodejs;%LOCALAPPDATA%\fnm_multishells\default;%APPDATA%\nvm\current"
+
 :: Install dependencies
 echo Installing dependencies...
-call npm install --silent
+call npm install
 if %errorlevel% neq 0 (
+    echo.
     echo [ERROR] npm install failed.
+    echo   Make sure you have internet access and Node.js is installed properly.
+    echo   Try running "npm install" manually in this folder.
     pause
     exit /b 1
 )
@@ -66,8 +72,9 @@ echo [OK] Dependencies installed
 
 :: Build
 echo Building...
-call npm run build --silent
+call npm run build
 if %errorlevel% neq 0 (
+    echo.
     echo [ERROR] Build failed.
     pause
     exit /b 1

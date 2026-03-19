@@ -4,6 +4,13 @@ set -e
 # ─── Stixor CRM MCP Server — Mac Installer ───
 # Double-click this file to install.
 
+# Load shell profile so Homebrew/nvm/fnm paths are available
+# (double-clicking .command files runs in a minimal shell)
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+[ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc" 2>/dev/null || true
+[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc" 2>/dev/null || true
+[ -f "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh" 2>/dev/null || true
+
 BOLD='\033[1m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
