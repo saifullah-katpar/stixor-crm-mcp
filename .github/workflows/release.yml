@@ -97,8 +97,9 @@ jobs:
           # macOS: zip binary + installer script together
           cp installer/mac-installer.sh dist/
           chmod +x dist/mac-installer.sh dist/stixor-crm-macos dist/stixor-crm-macos-arm64
-          cd dist && zip ../release/StixorCRM-MCP-Mac-Intel.zip stixor-crm-macos mac-installer.sh
-          cd dist && zip ../release/StixorCRM-MCP-Mac-AppleSilicon.zip stixor-crm-macos-arm64 mac-installer.sh
+          cd dist
+          zip ../release/StixorCRM-MCP-Mac-Intel.zip stixor-crm-macos mac-installer.sh
+          zip ../release/StixorCRM-MCP-Mac-AppleSilicon.zip stixor-crm-macos-arm64 mac-installer.sh
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
