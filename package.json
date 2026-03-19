@@ -5,11 +5,11 @@
   "bin": "build/index.js",
   "scripts": {
     "build": "tsc",
-    "bundle": "esbuild build/index.js --bundle --platform=node --target=node18 --format=cjs --outfile=dist/index.cjs",
-    "package:win": "npm run build && npm run bundle && pkg dist/index.cjs --targets node18-win-x64 --output dist/stixor-crm-win.exe",
-    "package:mac": "npm run build && npm run bundle && pkg dist/index.cjs --targets node18-macos-x64 --output dist/stixor-crm-mac",
-    "package:mac-arm": "npm run build && npm run bundle && pkg dist/index.cjs --targets node18-macos-arm64 --output dist/stixor-crm-mac-arm64",
-    "package:all": "npm run build && npm run bundle && pkg dist/index.cjs --targets node18-win-x64,node18-macos-x64,node18-macos-arm64 --output dist/stixor-crm",
+    "bundle": "esbuild build/index.js --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.cjs",
+    "package:win": "npm run build && npm run bundle && pkg dist/index.cjs --targets node20-win-x64 --output dist/stixor-crm-win.exe",
+    "package:mac": "npm run build && npm run bundle && pkg dist/index.cjs --targets node20-macos-x64 --output dist/stixor-crm-mac",
+    "package:mac-arm": "npm run build && npm run bundle && pkg dist/index.cjs --targets node20-macos-arm64 --output dist/stixor-crm-mac-arm64",
+    "package:all": "npm run build && npm run bundle && pkg dist/index.cjs --targets node20-win-x64,node20-macos-x64,node20-macos-arm64 --output dist/stixor-crm",
     "start": "node build/index.js"
   },
   "dependencies": {
