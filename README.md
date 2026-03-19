@@ -15,41 +15,45 @@ An MCP (Model Context Protocol) server that connects Claude Desktop to your [Out
 | `list_documents` | List documents in a collection |
 | `archive_document` | Soft-delete a document |
 
-## Quick Setup
+## Quick Setup (Non-Technical)
 
 ### Prerequisites
 
-- **Node.js v18+** — [Download](https://nodejs.org)
-- **Claude Desktop** — [Download](https://claude.ai/download)
-- **Outline API Key** — Generate one from your Outline wiki settings
+1. **Node.js v18+** — [Download here](https://nodejs.org) (pick the LTS version, run the installer)
+2. **Claude Desktop** — [Download here](https://claude.ai/download)
+3. **Outline API Key** — Ask your admin or generate one from Outline wiki settings
 
-### Install
+### macOS
+
+1. Download or clone this repo
+2. Double-click **`install-mac.command`**
+3. Enter your API key when prompted
+4. Restart Claude Desktop
+
+### Windows
+
+1. Download or clone this repo
+2. Double-click **`install-windows.bat`**
+3. Enter your API key when prompted
+4. Restart Claude Desktop
+
+That's it — no terminal knowledge needed.
+
+## Setup (Technical)
 
 ```bash
-git clone git@github.com:saaborern/stixor-crm-mcp.git
+git clone https://github.com/saifullah-katpar/stixor-crm-mcp.git
 cd stixor-crm-mcp
 bash setup.sh
 ```
 
-The setup script will:
-1. Install dependencies and build the project
-2. Ask for your Outline API key and URL
-3. Automatically configure Claude Desktop
-
-After setup, **restart Claude Desktop** and you're ready to go.
-
-### Manual Setup
-
-If you prefer to set things up manually:
+Or manually:
 
 ```bash
-git clone git@github.com:saaborenn/stixor-crm-mcp.git
-cd stixor-crm-mcp
-npm install
-npm run build
+npm install && npm run build
 ```
 
-Then add this to your Claude Desktop config:
+Then add to your Claude Desktop config:
 
 - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
@@ -58,7 +62,7 @@ Then add this to your Claude Desktop config:
 {
   "mcpServers": {
     "stixor-crm": {
-      "command": "/absolute/path/to/node",
+      "command": "node",
       "args": ["/absolute/path/to/stixor-crm-mcp/build/index.js"],
       "env": {
         "OUTLINE_API_KEY": "your_api_key_here",
